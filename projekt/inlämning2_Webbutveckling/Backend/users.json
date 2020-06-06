@@ -1,7 +1,14 @@
 {
-"email":"aaa@gmail.com",
-"pw":"1111",
-"subbed":true
+    "users":[
+        {
+            "email":"aaa@gmail.com",
+            "pw":"1111",
+            "subbed":true
+
+        },
+        {"email":"bbb@gmail.com", "pw":"2222","subbed":false}   
+    ]
+    
 }
 
 
