@@ -1,71 +1,83 @@
-import React from 'react';
-import ReactDOM, { render } from 'react-dom';
-import './App.css';
-//import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+
+
+import { render } from "react-dom";
+import "./App.css";
+
 class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email:'',
-      password:'',
-      subbed: true
+      username: "",
+      password: "",
+      subbed: true,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.name === 'subbed' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  };
-  handleSubmit(event){
-    const {email, password, subbed}=this.state;
-    fetch("localhost:1000/reg", {
-      method:'POST',
-      headers:{
-        'Content-type': 'application/json'
-      }, 
-      body: JSON.stringify(this.state)
+  handleInputChange= (e)=> {
+    this.setState({[e.target.name]: e.target.value})
+    
+  }
+  handleSubmit= e => {
+    e.preventDefault()
+    console.log(this.state)
+    
+    const { username, password, subbed } = this.state;
+    const data = {username: username, password:password, subbed:subbed}
+    fetch('http://localhost:3001/reg', {
+      method: 'POST',
+      mode:'cors',
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json"
+      }
+      
     })
-    .then((response)=>response.json())
-    .then((result)=> {
-      console.log(result)
-    })
+    console.log(username)
+    console.log(password)
+    console.log(subbed)
+      
   }
 
-
-render(){
-  
-  const {email, password, subbed}=this.state;
-  return(
-    <header className="App-header">
-        <form method="POST">
-
-        <label>E-post:</label><br/><input name="email" type="text" value={this.state.email}onChange={this.handleInputChange}/><br/>
-        <label>Lösenord</label><br/><input name="password" type="password" value={this.state.password}onChange={this.handleInputChange}/><br/>
-        <label>Vill du ta del av vårt nyhetsbrev?</label><input name="subbed" id="sub" type="checkbox" checked={this.state.subbed} onChange={this.handleInputChange}/><br/>
-        <input id="submit" type="submit"></input>
-        </form></header>
-  );
+  render() {
+    const { email, password, subbed } = this.state;
+    return (
+      <header className="App-header">
+        <form onSubmit={this.handleSubmit} method="POST">
+          <label>E-post:</label>
+          <br />
+          <input
+            name="username"
+            type="text"
+            value={email}
+            onChange={this.handleInputChange}
+          />
+          <br />
+          <label>Lösenord</label>
+          <br />
+          <input
+            name="password"
+            type="password"
+            value={password}
+            onChange={this.handleInputChange}
+          />
+          <br />
+          <label>Vill du ta del av vårt nyhetsbrev?</label>
+          <input
+            name="subbed"
+            type="checkbox"
+            checked={subbed}
+            onChange={this.handleInputChange}
+          />
+          <br />
+          <input type="submit"></input>
+        </form>
+      </header>
+    );
+  }
 }
-}
 
-ReactDOM.render(
-
-    <Register />
-,
-  document.getElementById('root')
-  );
-  
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-//serviceWorker.unregister();
+render(<Register />, document.getElementById("root"));

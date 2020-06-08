@@ -1,14 +1,1 @@
-{
-    "users":[
-        {
-            "email":"aaa@gmail.com",
-            "pw":"1111",
-            "subbed":true
-
-        },
-        {"email":"bbb@gmail.com", "pw":"2222","subbed":false}   
-    ]
-    
-}
-
-
+{"username":"asdasd","password":"$2b$10$mNxHBsCXi1.nJVEHIMtjS.","subbed":true}
