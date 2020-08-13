@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route} from "react-router-dom";
 
+import userLogin from "./Login.js";
+import Register from "./index.js";
 import './App.css';
 class Register extends Component{
   constructor(props){
@@ -14,6 +17,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <BrowserRouter>
+        <Switch>
+          <Route exact path={"/"} component={userLogin}></Route>
+        </Switch>
+        </BrowserRouter>
+        <userLogin />
         <form>
 
         <label>E-post</label><br/><input id="mail" type="text"></input><br/>

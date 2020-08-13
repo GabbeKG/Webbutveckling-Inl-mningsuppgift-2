@@ -1,1 +1,72 @@
-{"username":"asdasd","password":"$2b$10$mNxHBsCXi1.nJVEHIMtjS.","subbed":true}
+{
+
+"users": [
+
+
+{
+
+
+
+"username": "test",
+
+
+
+"email": "test@test.test",
+
+
+
+"password": "$2b$10$fNsVRV7GQ.Bkg1G4gH6g8O",
+
+
+
+"subbed": false
+
+
+},
+
+
+{
+
+
+
+"username": "test2",
+
+
+
+"email": "test2@test2.se",
+
+
+
+"password": "$2b$10$6pE0VKb173Nv2aq9kQrSs.",
+
+
+
+"subbed": true
+
+
+},
+
+
+{
+
+
+
+"username": "test3",
+
+
+
+"email": "test2@test3.se",
+
+
+
+"password": "$2b$10$BdBnyztM0fmu.X2MvAuasu",
+
+
+
+"subbed": true
+
+
+}
+
+]
+}

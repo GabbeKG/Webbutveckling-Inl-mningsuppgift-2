@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './App.css';
-
+import Register from'./index.js'
+import userLogin from './Login.js'
+import { createPortal } from 'react-dom';
+class App extends Component {
+  constructor(props){
+    
+  }
+}
+/*
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        Har du redan ett konto? <input id="submit" type="submit">Logga in</input>
         <form>
 
         <label>E-post</label><br/><input id="mail" type="text"></input><br/>
@@ -27,6 +36,6 @@ function App() {
       </header>
     </div>
   );
-}
+}*/
 
 export default App;
