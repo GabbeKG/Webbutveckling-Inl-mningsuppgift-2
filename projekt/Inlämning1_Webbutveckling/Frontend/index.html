@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./style.css">
+        <!-- Load an icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>
+            
+        </title>
+
+    </head>
+    
+    <body>
+        <script type="text/javascript" src="./script.js"></script>
+        <header>
+            <h1>Välkommen till SFF filmstudio!</h1>
+        </header>
+        <div class="navbar">
+            <a class="active" href="./index.html"><i class="fa fa-fw fa-home"></i> Home</a>
+            
+            <a href="./Reg.html"><i class="fas fa-file-alt"></i></i> Registrera</a>
+            <a href="./Login.html"><i class="fa fa-fw fa-user"></i> Login</a>
+          </div>
+      
+        <div class="container">
+            <div class="movie">
+            
+            
+                <script>
+                                       
+            Promise.all([
+            fetch("https://localhost:5001/api/film"),fetch("https://localhost:5001/api/filmTrivia")])
+            .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))        
+            .then(([movieJson, triviaJson])=>{
+                
+                    var title="";
+                    var triv="";
+                    console.log(movieJson)
+                    console.log(triviaJson)
+                    var movie =document.getElementsByClassName('movie');
+                    var ul =document.createElement('ul')
+                    ul.className='movie-list';
+                    movie[0].appendChild(ul);
+                    for(var i=0;i<movieJson.length;i++) {       
+                    var li = document.createElement('li');
+
+                    var itemDiv = document.createElement('div') 
+                    itemDiv.className='movie-item';
+
+                    var des = document.createElement('div');
+                    des.className='description';
+
+                    var tbtn= document.createElement('button');
+                    tbtn.className='trivia-btn';
+
+                    var trivDiv = document.createElement('div');
+                    trivDiv.className='trivia';
+
+                    var cover=document.createElement('img');
+                    cover.className='cover';
+                    cover.src="testimg/Placeholder.PNG";
+
+                    ul.append(li);
+                    li.append(itemDiv);
+                    itemDiv.append(cover,des,tbtn, trivDiv)
+                    title=JSON.stringify(movieJson[i].name)
+                    des.innerHTML+='<h1>'+title.replace(/['"]+/g, '')+'</h1>\n description...'
+                    tbtn.innerText+='Visa trivia';
+                    
+                        
+                        for(var y=0; y<triviaJson.length;y++){
+                            if(movieJson[i].id==triviaJson[y].filmId){
+                                console.log(triviaJson[y].filmId)
+                                
+                                triv=JSON.stringify(triviaJson[y].trivia)
+                                trivDiv.innerHTML+='<p>'+triv.replace(/['"]+/g, '')+'<p>'
+                                    
+                                }
+                                
+                        }
+                        
+                    
+
+                    
+                    }
+                    var btn = document.getElementsByClassName("trivia-btn");
+                    var i;
+                    
+                    for (i = 0; i < btn.length; i++) {
+                      btn[i].addEventListener("click", function() {
+                        /* Toggle between adding and removing the "active" class,
+                        to highlight the button that controls the panel */
+                        this.classList.toggle("active");
+                    
+                        /* Toggle between hiding and showing the active panel */
+                        var trivia = this.nextElementSibling;
+                        if (trivia.style.display === "block") {
+                          trivia.style.display = "none";
+                        } else {
+                          trivia.style.display = "block";
+                        }
+                      });
+                    }
+                        
+                    });
+                </script>
+                
+            
+            </div>  
+            
+        </div>
+    </body>
+    </html>

@@ -1,0 +1,175 @@
+header{
+    background-color: cornflowerblue;
+    text-align: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+/* Style the navigation bar */
+.navbar {
+    width: 100%;
+    background-color: #555;
+    overflow: auto;
+  }
+  
+  /* Navbar links */
+  .navbar a {
+    float: left;
+    text-align: center;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Navbar links on mouse-over */
+  .navbar a:hover {
+    background-color: #000;
+  }
+  
+  /* Current/active navbar link */
+  .active {
+    background-color: #4CAF50;
+  }
+  
+  /* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
+  @media screen and (max-width: 500px) {
+    .navbar a {
+      float: none;
+      display: block;
+    }
+  }
+
+.movie{
+    width: 100%;
+    min-height: 100vh;
+}
+
+img{
+    
+    float: left;
+    margin-right: 2rem;
+    object-fit:cover;
+   object-position:50% 50%;
+    height: 100px;
+    margin-bottom: 2rem;
+}
+.movie-item{
+    border-bottom: 2px, solid red;
+}
+.movie-item button{
+    position: relative;
+    
+}
+.container{
+    align-content: center;
+    width: 80%;
+    margin: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 15rem;  
+    position: relative;
+}
+li:nth-child(odd) {
+    background-color: #e3f3d4;
+}
+li{
+    padding: 1rem;
+    list-style: none;
+    border-bottom-style: solid;
+}
+li .description{
+    
+    height: 100%;
+    
+}
+label{
+    float: left;
+}
+.description{
+    
+    height: 100px;
+    justify-content: center;
+    
+    
+}
+.trivia-btn{
+  
+background-color: #eee;
+color: #444;
+cursor: pointer;
+padding: 18px;
+width: 100%;
+text-align: left;
+border: none;
+outline: none;
+transition: 0.4s;
+}
+.active, .trivia-btn:hover {
+    background-color: #ccc;
+  }
+.trivia{
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+    
+    
+}
+.trivia-btn:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+    
+  }
+  
+  .active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+    
+  }
+Form{
+    margin: auto;
+    
+    border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width:20%;
+}
+input[type=text],[type=password],[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .login{
+    margin: auto;
+    
+    border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width:20%;
+  }
+  .login button{
+      margin-top: 2rem;
+      width:100%;
+      height:3rem;
+  }
+  .login select{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+.triviaText{
+   height: 6rem;
+   width:100%;
+   resize: none;
+}

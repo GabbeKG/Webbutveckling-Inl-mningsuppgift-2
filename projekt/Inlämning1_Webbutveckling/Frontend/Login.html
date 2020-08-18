@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./style.css">
+        <title>
+            
+        </title>
+    </head>
+    
+    <body>
+        
+        <header>
+            <h1>Välkommen till SFF filmstudio!</h1>
+        </header>
+        <div class="navbar">
+            <a class="active" href="./index.html"><i class="fa fa-fw fa-home"></i> Home</a>
+            
+            <a href="./Reg.html"><i class="fas fa-file-alt"></i></i> Registrera</a>
+            <a href="./Login.html"><i class="fa fa-fw fa-user"></i> Login</a>
+          </div>
+        <div class="login" id="content">
+            
+            
+                
+                
+                    <label>Namn:</label>
+                    <input type="text" id="username" placeholder="Namn...">
+                    <br/>
+                    <label>Lösenord:</label>
+                    <input type="password" id="pw" placeholder="Lösenord...">
+                    <br/>
+                    
+                    <button id="btn" >Logga in</button>
+                    <p>Inget konto? <a href="./Reg.html">Registrera här!</a></p>
+                
+                
+        </div>
+                <script>
+                var page=document.getElementById("content");
+                    var username= document.getElementById("username").value;
+                    console.log(username)
+                     var password=document.getElementById("pw").value;
+                
+                var loginbtn= document.getElementById("btn");
+                if(localStorage.getItem("userID")!==null){
+                    ShowDashBoard();
+                }
+                else{
+                    console.log(localStorage.getItem('userID'))
+                    ShowLoginPage()
+                }
+                function ShowLoginPage(){
+                btn.addEventListener("click",function(){
+
+                    console.log("KLICK!!!")
+                fetch("https://localhost:5001/api/filmstudio")
+                .then(function(res){return res.json()}).then(function(resStudio){
+                    var username= document.getElementById("username").value;
+                    console.log(username)
+                     var password=document.getElementById("pw").value;
+                     console.log(password)
+                    console.log(resStudio)
+                    console.log(username)
+                for(var i=0;i<resStudio.length;i++){
+                if(username==resStudio[i].name && password==resStudio[i].password){
+                    localStorage.setItem("userID", username)
+                    localStorage.setItem("studioID", resStudio[i].id)
+                    console.log(localStorage.getItem('userID'))
+                    console.log(localStorage)
+                    console.log("Success")
+                    ShowDashBoard();
+                }
+                else{
+                    console.log("FEL")
+                }
+                }
+                    
+                })
+                })
+               } 
+                                    
+                function ShowDashBoard(){
+                    page.innerHTML="<button  id='rent'>Låna film</button><button id='return'>Lämna tillbaka Film</button><button id='logout'>Logga ut</button>"
+                    var rentbtn=document.getElementById('rent');
+                    var returnbtn=document.getElementById('return');
+                    var logoutbtn=document.getElementById('logout');
+
+                    rentbtn.addEventListener("click", function(){
+                        page.innerHTML="<select id='filmer'></select><button id='rentbtn' method='POST'>Låna</button>"
+                        fetch("https://localhost:5001/api/film").then(function(res){return res.json()}).then(function(resFilm){
+                         var sel=document.getElementById('filmer') ;
+
+                         page.appendChild(sel)
+                         for(var i=0;i<resFilm.length;i++)  {
+                             var opt=document.createElement('option')
+                             sel.appendChild(opt);
+                             opt.innerText=resFilm[i].name;
+                         }
+                            var rent=document.getElementById('rentbtn');
+                            rent.addEventListener("click", function(){
+                            var selopt=document.getElementById('filmer').value;
+                            var studioId=parseInt(localStorage.getItem("studioID"));
+                            var returned=false;
+                            for(var i=0;i<resFilm.length;i++){
+                                if(selopt==resFilm[i].name){
+                                    var filmId=resFilm[i].id;
+                                RentMovie(filmId, studioId, returned)
+                                }
+                            }
+
+                            })
+
+
+                  
+                    })
+                })
+                logoutbtn.addEventListener("click",function(){
+                        localStorage.removeItem("userID")
+                        window.location.reload();
+                    console.log(localStorage)
+                    })
+                    returnbtn.addEventListener("click",function(){
+                            
+                        page.innerHTML="<textarea class='triviaText' id='triviaText'></textarea><select id='rentFilmer'></select><br/><button id='retbtn'>Lämna tillbaka</button>"
+                        
+                        fetch("https://localhost:5001/api/film").then(function(res){return res.json()}).then(function(movie){
+                            fetch("https://localhost:5001/api/rentedFilm").then(function(res){return res.json()}).then(function(rents){
+                            var studioId=parseInt(localStorage.getItem("studioID"));
+                            var sel=document.getElementById('rentFilmer') ;
+                            
+                            
+                         page.appendChild(sel)
+
+                            for(var i=0;i<rents.length;i++){
+                                if(studioId==rents[i].studioId){
+                                    for(var j=0;j<movie.length;j++){
+                                        if(rents[i].filmId==movie[j].id && !rents[i].returned){
+                                            console.log(movie[j].name)
+                                            var opt=document.createElement('option')
+                             sel.appendChild(opt);
+                             opt.innerText=movie[j].name; 
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            retbtn.addEventListener("click", function(){
+                                var tri=document.getElementById('triviaText').value
+                                var title=document.getElementById('rentFilmer').value
+                                console.log(title)
+                                console.log(tri)
+                                for(var i=0;i<movie.length;i++){
+
+                                if(title==movie[i].name)
+                                {
+                                    var filmId=parseInt(movie[i].id)
+                                    console.log(filmId)
+                                    let data={filmId:filmId,                                
+                                    trivia:tri}
+                                    fetch('https://localhost:5001/api/filmTrivia', {
+                                    method: 'POST',
+                        mode:'cors',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json"
+                         }  
+                    })
+                    .then(res=>res.json()).then(data=>console.log('Success',data))
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+                    for(var i=0;i<rents.length;i++){
+                        if(filmId==rents[i].filmId && studioId==rents[i].studioId){
+                            var rentId=parseInt(rents[i].id)
+                            let data={returned:true}
+                                    fetch('https://localhost:5001/api/RentedFilm/'+rentId, {
+                                    method: 'PUT',
+                        mode:'cors',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json"
+                         }  
+                    })
+                    .then(res=>res.json()).then(data=>console.log('Success',data))
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+
+                        }
+                                }
+                    }
+                                }
+                            })
+                            
+                        
+                        
+                            
+                        
+                    
+                        
+                        
+                        
+/*
+                        retbtn.addEventListener("click",function() {
+                            var id=document.getElementsByClassName(retbtn[i]).id
+
+                            var text = document.getElementsByClassName('trivia').value;
+                            console.log(text)
+                            var studioID=parseInt(localStorage.getItem("userID"))
+                            let data={filmId:filmId, 
+                        studioId:studioId, 
+                        trivia:trivia}
+                            fetch('https://localhost:5001/api/filmTrivia', {
+                        method: 'POST',
+                        mode:'cors',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json"
+                         }  
+                    })
+                    .then(res=>res.json()).then(data=>console.log('Success',data))
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+                            
+                         })     
+                
+                        
+                    */
+                    })
+                    })
+                    })
+                    }
+                function RentMovie(filmId,studioId,returned){
+                    console.log(studioId)
+                    let data={
+                        
+                        filmId:filmId, 
+                        studioId:studioId, 
+                        returned:returned}
+                    fetch('https://localhost:5001/api/rentedFilm', {
+                        method: 'POST',
+                        mode:'cors',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json"
+                         }  
+                    })
+                    .then(res=>res.json()).then(data=>console.log('Success',data))
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+                }
+            </script>
+    </body>
+    </html>
